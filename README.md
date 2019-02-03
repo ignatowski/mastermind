@@ -63,8 +63,8 @@ docker-compose down
 
 
 
-### Postman collection
-A postman collection with the following requests is included at /server/mastermind_rest_api.postman_collection.json.
+### <mark>Postman collection</mark>
+A <mark>**_postman collection_**</mark> with the following requests is included at <mark>**_/server/mastermind_rest_api.postman_collection.json_**</mark>.
 
 
 
