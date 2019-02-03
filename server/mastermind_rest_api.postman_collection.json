@@ -1,0 +1,205 @@
+{
+	"info": {
+		"_postman_id": "f56c53bd-aaec-4d53-ae87-914d1f10e7ae",
+		"name": "mastermind_rest_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Step 1 - user registration - localhost:8000/users/register/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "55b2f858-28d0-4571-bf03-2a7020dcc64e",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"mastermind_token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"testuser1\",\n    \"email\": \"testuser1@test.com\",\n    \"password\": \"password1234\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8000/users/register/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"register",
+						""
+					]
+				},
+				"description": "Register a user and set their token as an environment variable."
+			},
+			"response": []
+		},
+		{
+			"name": "Step 2 - user login - localhost:8000/users/login/",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "79ccc46e-7815-4ca9-b010-da5586fbf466",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"mastermind_token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"testuser1\",\n\t\"password\": \"password1234\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8000/users/login/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"login",
+						""
+					]
+				},
+				"description": "Login a user and set their token as an environment variable."
+			},
+			"response": []
+		},
+		{
+			"name": "Step 3 - game creation - localhost:8000/api/games/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token {{mastermind_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8000/api/games/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"games",
+						""
+					]
+				},
+				"description": "Create a mastermind game."
+			},
+			"response": []
+		},
+		{
+			"name": "Step 4 - Create a move - localhost:8000/api/moves/",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Token {{mastermind_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"game\": 1,\r\n    \"code\": [\r\n        \"purple\",\r\n        \"purple\",\r\n        \"orange\",\r\n        \"green\"\r\n    ]\r\n}"
+				},
+				"url": {
+					"raw": "localhost:8000/api/moves/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"moves",
+						""
+					]
+				},
+				"description": "Make a move in the given mastermind game."
+			},
+			"response": []
+		},
+		{
+			"name": "Step 5 - get a game with moves - localhost:8000/api/games/1/",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{mastermind_token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8000/api/games/1/",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"games",
+						"1",
+						""
+					]
+				},
+				"description": "Get a given mastermind game with its move history."
+			},
+			"response": []
+		}
+	]
+}

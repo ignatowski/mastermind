@@ -59,16 +59,17 @@ docker-compose down
 
 
 
-##REST API Services
+## REST API Services
 
 
 
 ### Postman collection
-A postman collection with the following requests is included at /server/mastermind_api.
+A postman collection with the following requests is included at /server/mastermind_rest_api.postman_collection.json.
 
 
 
 ### user registration
+```
 POST
 localhost:8000/users/register/
 Headers:
@@ -86,9 +87,12 @@ Example json response:
     "email": "testuser1@test.com",
     "token": "8a2bcdeeb04567f5ef608d8d72f0182dca457d82"
 }
+```
+
 
 
 ### user login
+```
 POST
 localhost:8000/users/login/
 Headers:
@@ -103,19 +107,37 @@ Example json response:
     "username": "testuser1",
     "token": "8a2bcdeeb04567f5ef608d8d72f0182dca457d82"
 }
+```
+
 
 
 ### create new game
+```
 POST
 localhost:8000/api/games/
 Headers:
 	Content-type: application/json
 	Authorization: Token 8a2bcdeeb04567f5ef608d8d72f0182dca457d82
 Example json response:
+{
+    "id": 1,
+    "number_of_moves": 12,
+    "codebreaker": 1,
+    "color_choices": [
+        "red",
+        "orange",
+        "yellow",
+        "green",
+        "blue",
+        "purple"
+    ]
+}
+```
 
 
 
 ### create new move
+```
 POST
 localhost:8000/api/moves/
 Headers:
@@ -132,12 +154,60 @@ Post body example:
     ]
 }
 Example json response:
+{
+    "id": 1,
+    "game": 1,
+    "code": [
+        "purple",
+        "purple",
+        "orange",
+        "green"
+    ],
+    "result": [
+        "black",
+        "black",
+        "white"
+    ]
+}
+```
 
 
 
 ### get game and move history
+```
 GET
 localhost:8000/api/games/1/
 Headers:
 	Authorization: Token 8a2bcdeeb04567f5ef608d8d72f0182dca457d82
 Example json response:
+{
+    "id": 1,
+    "number_of_moves": 12,
+    "codebreaker": 1,
+    "moves": [
+        {
+            "id": 1,
+            "game": 1,
+            "code": [
+                "purple",
+                "purple",
+                "orange",
+                "green"
+            ],
+            "result": [
+                "black",
+                "black",
+                "white"
+            ]
+        }
+    ],
+    "color_choices": [
+        "red",
+        "orange",
+        "yellow",
+        "green",
+        "blue",
+        "purple"
+    ]
+}
+```

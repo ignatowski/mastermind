@@ -30,6 +30,7 @@ class UsersTest(APITestCase):
         self.assertEqual(response.data['username'], data['username'])
         self.assertEqual(response.data['email'], data['email'])
         self.assertTrue('token' in response.data)
+        self.assertTrue('id' in response.data)
         self.assertFalse('password' in response.data)
 
     def test_user_register_fail_username_empty(self) -> None:
