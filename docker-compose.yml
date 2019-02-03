@@ -1,0 +1,46 @@
+version: '3'
+services:
+  mastermind-server:
+    build:
+      context: ./
+      dockerfile: ./server/build/Dockerfile
+    hostname: 'mastermind-server'
+    container_name: 'mastermind-server'
+    env_file:
+      - ./server/.env
+    volumes:
+      - './server:/opt/src'
+      - './server/build/entry.sh:/entry.sh'
+    ports:
+      - '8000:8000'
+    networks:
+      - app
+    depends_on:
+      - mastermind-postgresql
+    links:
+      - 'mastermind-postgresql:mastermind-postgresql'
+    entrypoint: /entry.sh
+    #command: python3 manage.py runserver 0.0.0.0:8000
+    working_dir: '/opt/src'
+    #stdin_open: true
+    #tty: true
+  mastermind-postgresql:
+    build:
+      context: ./
+      dockerfile: ./database/build/Dockerfile
+    container_name: 'mastermind-postgresql'
+    env_file:
+      - ./database/.env
+    volumes:
+      - 'mastermind-postgresql-data:/var/lib/postgresql/data'
+      - './database/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d/'
+    ports:
+      - '5432:5432'
+    networks:
+      - app
+networks:
+  app:
+    driver: bridge
+volumes:
+  mastermind-postgresql-data:
+  mastermind-server-data:
