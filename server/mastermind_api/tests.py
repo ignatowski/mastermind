@@ -313,10 +313,16 @@ class MovesTest(APITestCase):
                 "blue"
             ]
         }
+        login_data = {
+            'username': self.testuser1game.username,
+            'password': self.password
+        }
+        login_response = self.client.post(self.user_login_url, login_data, format='json')
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + login_response.data['token'])
         response = self.client.post(self.move_create_url, data, format='json')
         self.assertEqual(Game.objects.count(), 1)
         self.assertEqual(Move.objects.count(), 0)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_move_create_fail_more_holes(self) -> None:
         """Test that user cannot make a move with more holes"""
@@ -331,10 +337,16 @@ class MovesTest(APITestCase):
                 "blue"
             ]
         }
+        login_data = {
+            'username': self.testuser1game.username,
+            'password': self.password
+        }
+        login_response = self.client.post(self.user_login_url, login_data, format='json')
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + login_response.data['token'])
         response = self.client.post(self.move_create_url, data, format='json')
         self.assertEqual(Game.objects.count(), 1)
         self.assertEqual(Move.objects.count(), 0)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_move_create_fail_code_choice_invalid(self) -> None:
         """Test that user cannot make a move with an invalid code choice"""
@@ -348,10 +360,16 @@ class MovesTest(APITestCase):
                 "pink"
             ]
         }
+        login_data = {
+            'username': self.testuser1game.username,
+            'password': self.password
+        }
+        login_response = self.client.post(self.user_login_url, login_data, format='json')
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + login_response.data['token'])
         response = self.client.post(self.move_create_url, data, format='json')
         self.assertEqual(Game.objects.count(), 1)
         self.assertEqual(Move.objects.count(), 0)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_move_create_fail_code_game_empty(self) -> None:
         """Test that user cannot make a move without a game id"""
@@ -365,10 +383,16 @@ class MovesTest(APITestCase):
                 "blue"
             ]
         }
+        login_data = {
+            'username': self.testuser1game.username,
+            'password': self.password
+        }
+        login_response = self.client.post(self.user_login_url, login_data, format='json')
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + login_response.data['token'])
         response = self.client.post(self.move_create_url, data, format='json')
         self.assertEqual(Game.objects.count(), 1)
         self.assertEqual(Move.objects.count(), 0)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_move_create_fail_code_code_empty(self) -> None:
         """Test that user cannot make a move without a code"""
@@ -377,10 +401,16 @@ class MovesTest(APITestCase):
             "game": self.game1.id,
             "code": None
         }
+        login_data = {
+            'username': self.testuser1game.username,
+            'password': self.password
+        }
+        login_response = self.client.post(self.user_login_url, login_data, format='json')
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + login_response.data['token'])
         response = self.client.post(self.move_create_url, data, format='json')
         self.assertEqual(Game.objects.count(), 1)
         self.assertEqual(Move.objects.count(), 0)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_move_create_fail_code_node_list(self) -> None:
         """Test that user cannot make a move without a code"""
@@ -389,7 +419,13 @@ class MovesTest(APITestCase):
             "game": self.game1.id,
             "code": "code"
         }
+        login_data = {
+            'username': self.testuser1game.username,
+            'password': self.password
+        }
+        login_response = self.client.post(self.user_login_url, login_data, format='json')
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + login_response.data['token'])
         response = self.client.post(self.move_create_url, data, format='json')
         self.assertEqual(Game.objects.count(), 1)
         self.assertEqual(Move.objects.count(), 0)
-        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
